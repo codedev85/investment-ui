@@ -1,0 +1,62 @@
+.wallet_section{
+   background: #fff;
+   padding:4rem;
+   margin-top: 4rem;
+   width: 80vw;
+}
+.details p{
+   line-height: 2.5em;
+   font-size: 1.4em;
+}
+.withdrawals_btn button {
+    padding:.6em;
+    margin-right:.6em;
+    border-radius: .3em;
+}
+.withdrawals_btn button:nth-child(2){
+    background: red;
+}
+   
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+  }
+  .modal-content  input{
+    padding:.9em;
+    border: .3px solid #000;
+    border-radius: 1rem;
+    margin: 1em 0;
+  }
+  .withdrawal_btn button{
+    margin: .3em;
+    width: 5vw;
+    padding:.5em;
+    border-radius: .4em;
+  }
+  .withdrawal_btn button:nth-child(2){
+    background-color: red;
+  }
+  
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+
+   

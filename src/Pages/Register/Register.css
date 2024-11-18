@@ -1,0 +1,35 @@
+.login_box{
+   background-color: #fff;
+   padding:2em;
+   width: 40vw;
+   margin-top: 10%;
+}
+
+.container{
+   display: flex;
+   justify-content: center;
+  
+}
+.input{
+   display: flex;
+   flex-direction: column;
+   margin: 1em;
+}
+.input input {
+   padding:.9em;
+   border: .3px solid #000;
+   border-radius: 1rem;
+}
+.input label{
+  margin-bottom: .8em;
+  font-size: 1em;
+}
+.input  button {
+   padding:1em;
+   border: 0;
+   background: #2575fc;
+   color: #fff;
+   cursor: pointer;
+   border-radius: 2em;
+   margin-top: 1em;
+}
