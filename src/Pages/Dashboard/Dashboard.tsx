@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
+import apiClient from '../../apiClient';
 
 // Define the Investment type
 interface Investment {
@@ -14,21 +15,22 @@ interface Investment {
 }
 
 export default function Dashboard() {
-  // Initialize the state with an empty array of investments
+
   const [investments, setInvestments] = useState<Investment[]>([]);
 
   useEffect(() => {
   
     (async () => {
-      const response = await fetch('http://localhost:8000/api/investment-plans', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', 
-      });
+      try {
+        const response = await apiClient.get('/investment-plans');
+        const content = response.data;
+        setInvestments(content); 
+      } catch (error: any) {
 
-      const content = await response.json();
-      console.log(content)
-      setInvestments(content); 
+        throw new Error(error);
+
+      }
+    
     })();
   }, []); 
 

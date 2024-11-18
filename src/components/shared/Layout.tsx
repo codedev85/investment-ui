@@ -1,11 +1,29 @@
 import React from 'react'
 import { Outlet ,NavLink  } from 'react-router-dom'
 import './Layout.css'
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 export default function Layout() {
+
+  const navigate = useNavigate(); 
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+      await logout();
+      navigate('/');
+  };
+
+  const isAuthenticated = () => {
+    return !!localStorage.getItem('token');
+  };
+
+
   return (
     <div>
       <div className="container">
+      {
+      isAuthenticated() && 
         <div className="navigation">
           <div className="menu">
             <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "active" : "")}>
@@ -14,15 +32,13 @@ export default function Layout() {
             <NavLink to="/transaction" className={({ isActive }) => (isActive ? "active" : "")}>
               Transaction
             </NavLink>
-            <NavLink to="/wallet" className={({ isActive }) => (isActive ? "active" : "")}>
-              Wallet
-            </NavLink>
-            <NavLink to="/profile" className={({ isActive }) => (isActive ? "active" : "")}>
-              Profile
-            </NavLink>
+             <a className="logout" onClick={handleLogout} >
+              LogOut
+             </a>
           </div>
         </div>
-        {/* This renders child routes */}
+        }
+       
         <div className="content">
           <Outlet />
         </div>

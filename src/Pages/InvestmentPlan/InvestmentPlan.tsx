@@ -2,6 +2,7 @@ import React, { useEffect, useState ,useContext} from 'react';
 import './InvestmentPlan.css';
 import { useParams } from 'react-router-dom';
 import { MessageContext } from '../../components/shared/MessageContext';
+import apiClient from '../../apiClient';
 
 interface SubscriptionDetails {
   subscription_date?: string;
@@ -54,23 +55,24 @@ const InvestmentPlan: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/investment/plans/${id}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        });
 
-        if (!response.ok) {
-          displayError('Failed to fetch investment plan');
-          throw new Error();
+        try {
+          const response = await apiClient.get(`investment/plans/${id}`);
+          const content = response.data;
+          
+          if(response.statusText === "OK"){
+            setInvestment(content); 
+          }
+         
+        } catch (error: any) {
+  
+          throw new Error(error);
+  
         }
-
-        const content: InvestmentPlan = await response.json();
-        setInvestment(content);
         
       } catch (error) {
          displayError('Failed to fetch investment plan'+error);
-        console.error('Error fetching investment plan:', error);
+  
       }
     })();
   }, [id]);
@@ -89,36 +91,28 @@ const InvestmentPlan: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/investment/plans/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({
-          investment_plan: investment.id,
-          amount_invested: amount,
-        }),
-      });
+    
+      const response = await apiClient.post('investment/plans/subscribe',{investment_plan: investment.id,
+        amount_invested: amount,});
 
-      if (!response.ok) {
-      //   throw new Error('Failed to subscribe to investment plan');
-        displayError('Failed to subscribe to investment plan');
-      }
+        if(response.statusText !== 'Created'){
+          displayError('Failed to subscribe to investment plan');
+        }
 
-      const result = await response.json();
-      console.log('Subscription successful:', result);
-      setShowModal(false);
-      setError(null);
+        setShowModal(false);
+
+        setError(null);
 
       setTimeout(() => {
          window.location.reload();
        }, 3000);
      
-
-      displaySuccess(result.message);
+      displaySuccess('Subscription created successfully');
     
     } catch (error) {
+
       displayError('Error subscribing to plan');
-      console.error('Error subscribing to plan:', error);
+
       setError('Failed to subscribe. Please try again.');
     }
   };

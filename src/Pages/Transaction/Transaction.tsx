@@ -1,6 +1,7 @@
 import React ,{ useEffect, useState , useContext}from 'react'
 import './Transaction.css'
 import { MessageContext } from '../../components/shared/MessageContext';
+import apiClient from '../../apiClient';
 
 export default function Transaction() {
 
@@ -56,14 +57,13 @@ export default function Transaction() {
   useEffect(() => {
   
     (async () => {
-      const response = await fetch('http://localhost:8000/api/wallet/details', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', 
-      });
-      const content = await response.json();
+
+      const response = await apiClient.get('wallet/details');
+    
+      const content = response.data;
 
       setWallet(content); 
+
     })();
   }, []); 
 
@@ -71,12 +71,10 @@ export default function Transaction() {
   useEffect(() => {
   
     (async () => {
-      const response = await fetch('http://localhost:8000/api/fetch/transactions', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', 
-      });
-      const content = await response.json();
+     
+      const response = await apiClient.get('fetch/transactions');
+      
+      const content = response.data;
 
       if(content.status){
         setTransactions(content.transactions); 
@@ -97,23 +95,19 @@ export default function Transaction() {
       return;
     }
     setError(null);
-      const response = await fetch('http://localhost:8000/api/fund/wallet', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', 
-        body :JSON.stringify({
-          amount : fundAmount,
-        }),
-    });
+  
+    const response = await apiClient.post('fund/wallet',{ amount : fundAmount,});
+    const content = response.data;
+  
+    if(content.status !== 'true') {
+      displayError('Failed to withdraw fund');
+    }
     
-
-    if (!response.ok) {
-      //   throw new Error('Failed to subscribe to investment plan');
-        displayError('Failed to withdraw fund');
-      }
-    
-    const content = await response.json();
     setIsFundModalOpen(false);
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
 
     displaySuccess(content?.message)
   };
@@ -128,30 +122,22 @@ export default function Transaction() {
       setError('Insufficient funds to withdraw.');
       return;
     }
+
     setError(null);
-
-    const response = await fetch('http://localhost:8000/api/withdraw/fund', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include', 
-      body :JSON.stringify({
-        amount : withdrawAmount,
-      }),
-  });
   
+    const response = await apiClient.post('withdraw/fund',{ amount : withdrawAmount,});
+    const content = response.data;
 
-    if (!response.ok) {
-      //   throw new Error('Failed to subscribe to investment plan');
+    if(content.status !== 'true') {
         displayError('Failed to withdraw fund');
       }
     
-     const content = await response.json();
      displaySuccess(content?.message)
 
-    
-    // Make the API call to withdraw from the wallet
-    // const response = await fetch('API to withdraw funds', { ... });
-    // Handle the response and update wallet state
+     setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+
     setIsWithdrawModalOpen(false);
   };
 

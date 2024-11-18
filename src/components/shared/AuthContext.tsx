@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-
+import apiClient from '../../apiClient';
 // Define the type for the user object based on your response structure
 interface User {
   id: number;
@@ -39,29 +39,47 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 //     }
 //   }, []);
 
-  const login = async (email: string, password: string) => {
-    const response = await fetch('http://localhost:8000/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({
-        password,
-        email,
-      }),
-    });
+  // const login = async (email: string, password: string) => {
+  //   const response = await fetch('http://localhost:8000/api/login', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     credentials: 'include',
+  //     body: JSON.stringify({
+  //       password,
+  //       email,
+  //     }),
+  //   });
 
-    const content = await response.json();
-    if (content.status === 'true') {
-      localStorage.setItem('token', content.jwt);
-      setUser(content.user); 
-    } else {
-      throw new Error(content.message);
+  //   const content = await response.json();
+  //   if (content.status === 'true') {
+  //     localStorage.setItem('token', content.jwt);
+  //     setUser(content.user); 
+  //   } else {
+  //     throw new Error(content.message);
+  //   }
+  // };
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await apiClient.post('/login', { email, password });
+      const content = response.data;
+
+      if (content.status === 'true') {
+        localStorage.setItem('token', content.jwt);
+        setUser(content.user); 
+      } else {
+        throw new Error(content.message);
+      }
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Login failed');
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
     localStorage.removeItem('token');
-    setUser(null);
+    const response = await apiClient.post('/logout');
+    console.log(response)
+    // const content = response.data;
+   
   };
 
   return (
