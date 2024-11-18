@@ -12,6 +12,7 @@ import { AuthProvider } from './components/shared/AuthContext';
 import PrivateRoute from './components/shared/PrivateRoute';
 import PublicRoute from './components/shared/PublicRoute';
 import InvestmentPlan from './Pages/InvestmentPlan/InvestmentPlan';
+import Activation from './Pages/Activation/Activation';
 
 function App() {
   return (
@@ -35,9 +36,14 @@ function App() {
               <Route path='/transaction'  element={<Transaction/>} />
            </Route>
           
-           <Route path="/investment/:id" >
+           <Route path="/investment/:id" element={<PrivateRoute />}>
               <Route path=""  element={<InvestmentPlan/>} />
            </Route>
+           <Route path="/activate/account" element={<PublicRoute />}>
+              <Route path=""  element={<Activation/>} />
+           </Route>
+
+           
            </Route>
           </Routes>
         </Router>

@@ -43,7 +43,7 @@ export default function Register() {
          
                if (response.ok) {
                  displaySuccess(content.message);
-                 navigate('/')
+                 navigate('/activate/account')
                } else {
                  displayError(content.message);
                }
