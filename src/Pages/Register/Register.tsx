@@ -2,7 +2,7 @@ import React ,{SyntheticEvent, useState , useContext} from 'react'
 import './Register.css';
 import { Link ,useNavigate } from 'react-router-dom';
 import { MessageContext } from '../../components/shared/MessageContext';
-
+import apiClient from '../../apiClient';
 
 export default function Register() {
 
@@ -28,25 +28,23 @@ export default function Register() {
             e.preventDefault()
        
             try {
-               const response = await fetch('http://localhost:8000/api/register', {
-                 method: 'POST',
-                 headers: { 'Content-Type': 'application/json' },
-                 body: JSON.stringify({
-                   first_name: name,
-                   password,
-                   email,
-                   phone_number: phoneNumber,
-                 }),
-               });
-         
-               const content = await response.json();
-         
-               if (response.ok) {
+             
+              const response = await apiClient.post('/register',{
+                     first_name: name,
+                     password,
+                     email,
+                     phone_number: phoneNumber,
+                   });
+
+              const content = response.data;
+
+               if (content.status === 'true') {
                  displaySuccess(content.message);
                  navigate('/activate/account')
                } else {
                  displayError(content.message);
                }
+           
              } catch (error) {
                displayError('An error occurred while processing your request. Please try again later.');
                console.error('Error:', error);
