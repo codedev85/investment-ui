@@ -1,7 +1,8 @@
 import React , {useState ,SyntheticEvent ,useContext}from 'react'
 import apiClient from '../../apiClient';
 import { MessageContext } from '../../components/shared/MessageContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link} from 'react-router-dom';
+
 
 export default function Activation() {
 
@@ -67,6 +68,11 @@ export default function Activation() {
        <div className="input">
          <button type="submit">Validate Code</button>
        </div>
+       <div className="input">
+            <p>
+              Go to Login ? <Link to="/">Login</Link>
+            </p>
+         </div>
      </form>
    </div>
  </div>

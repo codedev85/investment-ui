@@ -20,8 +20,6 @@ export default function Register() {
  
    const { displayError, displaySuccess } = messageContext;
 
-   // const { displayError ,displaySuccess} = useContext(MessageContext);
-   
 
    const submit = async (e : SyntheticEvent) => {
       

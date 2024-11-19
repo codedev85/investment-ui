@@ -22,29 +22,26 @@ function App() {
         <Router>
         <MessageHandler /> 
           <Routes>
-          <Route path="/" element={<Layout/>} >
-           <Route path="/"  element={<PublicRoute />}>
-              <Route index  element={<Login/>} />
-           </Route>
-           <Route path="/register" element={<PublicRoute />}>
-              <Route path='/register'  element={<Register/>} />
-           </Route>
-           <Route path="/dashboard" element={<PrivateRoute />} >
-              <Route path='/dashboard'  element={<Dashboard/>} />
-           </Route>
-           <Route path="/transaction" element={<PrivateRoute />}>
-              <Route path='/transaction'  element={<Transaction/>} />
-           </Route>
-          
-           <Route path="/investment/:id" element={<PrivateRoute />}>
-              <Route path=""  element={<InvestmentPlan/>} />
-           </Route>
-           <Route path="/activate/account" element={<PublicRoute />}>
-              <Route path=""  element={<Activation/>} />
-           </Route>
-
-           
-           </Route>
+            <Route path="/" element={<Layout/>} >
+               <Route path="/"  element={<PublicRoute />}>
+                  <Route index  element={<Login/>} />
+               </Route>
+               <Route path="/register" element={<PublicRoute />}>
+                  <Route path='/register'  element={<Register/>} />
+               </Route>
+               <Route path="/dashboard" element={<PrivateRoute />} >
+                  <Route path='/dashboard'  element={<Dashboard/>} />
+               </Route>
+               <Route path="/transaction" element={<PrivateRoute />}>
+                  <Route path='/transaction'  element={<Transaction/>} />
+               </Route>
+               <Route path="/investment/:id" element={<PrivateRoute />}>
+                  <Route path=""  element={<InvestmentPlan/>} />
+               </Route>
+               <Route path="/activate/account" element={<PublicRoute />}>
+                  <Route path=""  element={<Activation/>} />
+               </Route>
+            </Route>
           </Routes>
         </Router>
       </MessageProvider>
