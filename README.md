@@ -23,15 +23,29 @@ Follow these steps to set up the project:
 
    Run the following command to start the project:
 
-   ```bash
+   ```
    npm run start
+   ```
 
 ## Chaneg Base URl
 
    Go to **src/apiClient** and to replcae the base url with the prefered url;
 
 
+3. **Additonal**
+  ##  Credentials 
+   ## Note : Credentails were providd should incase the user do not recieve a mail, because the maill will drop in my mailtrap box not personal email
 
+   ## User that is yet to subscribe to a plan
+```
+   email testme1@gmail.com
+   password : password
+```
+   ## User that already subscribed to a plan
+```
+   email zaccheausolawuyi@gmail.com
+   password : password
+```
 
    
 
