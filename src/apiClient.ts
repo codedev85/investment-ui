@@ -46,9 +46,9 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401 || error.response?.status === 403) {
       localStorage.removeItem('token'); // Clear token from localStorage
 
-      // setTimeout(()=> {
-      //   window.location.href = '/'; 
-      // },3000)
+      setTimeout(()=> {
+        window.location.href = '/'; 
+      },3000)
       
     }
     return Promise.reject(error); 
