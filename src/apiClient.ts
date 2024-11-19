@@ -41,7 +41,7 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://investment.veloxsolution.ng/api', 
+  baseURL: 'http://localhost:8000/api', 
   withCredentials: true, 
 });
 
