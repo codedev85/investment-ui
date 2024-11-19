@@ -41,7 +41,7 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000/api', 
+  baseURL: 'https://investment.veloxsolution.ng/api', 
   withCredentials: true, 
 });
 
@@ -85,7 +85,11 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401 || error.response?.status === 403) {
       localStorage.removeItem('token'); // Clear token from localStorage
-      // window.location.href = '/'; // Optionally redirect to login
+
+      setTimeout(()=> {
+        window.location.href = '/'; 
+      },3000)
+      
     }
     return Promise.reject(error); 
   }
