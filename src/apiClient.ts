@@ -40,10 +40,9 @@
 
 import axios, { AxiosRequestConfig, AxiosRequestHeaders, InternalAxiosRequestConfig } from 'axios';
 
-// Create an Axios instance
 const apiClient = axios.create({
   baseURL: 'https://investment.veloxsolution.ng/api', 
-  withCredentials: true, // Ensures cookies are sent with requests
+  withCredentials: true, 
 });
 
 // Utility function to get the CSRF token from cookies
@@ -70,6 +69,7 @@ apiClient.interceptors.request.use(
 
     if (csrfToken) {
       (config.headers as AxiosRequestHeaders)['X-CSRFToken'] = csrfToken; 
+       config.headers['X-CSRFToken'] = csrfToken;
     }
 
     return config;
