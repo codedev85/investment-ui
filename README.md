@@ -19,6 +19,13 @@ Follow these steps to set up the project:
    ```bash
    npm install
 
+2. **Start**:
+
+   Run the following command to start the project:
+
+   ```bash
+   npm run start
+
 ## Chaneg Base URl
 
    Go to **src/apiClient** and to replcae the base url with the prefered url;
