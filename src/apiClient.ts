@@ -29,7 +29,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401 || error.response?.status === 403) {
     
       localStorage.removeItem('token');
-      window.location.href = '/'; 
+      // window.location.href = '/'; 
     }
     return Promise.reject(error); 
   }
